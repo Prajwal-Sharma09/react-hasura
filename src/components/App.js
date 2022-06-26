@@ -7,21 +7,22 @@ import TodoPrivateWrapper from "./Todo/TodoPrivateWrapper";
 import TodoPublicWrapper from "./Todo/TodoPublicWrapper";
 import OnlineUsersWrapper from "./OnlineUsers/OnlineUsersWrapper";
 
-import {
-  ApolloClient,
-  ApolloProvider,
-  InMemoryCache,
-  HttpLink,
-} from "@apollo/client";
+import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+import { WebSocketLink } from "@apollo/client/link/ws";
 
 import useAccessToken from "../hooks/useAccessToken";
 
 const createApolloClient = (authToken) => {
   return new ApolloClient({
-    link: new HttpLink({
-      uri: "https://hasura.io/learn/graphql",
-      headers: {
-        Authorization: `Bearer ${authToken}`,
+    link: new WebSocketLink({
+      uri: "wss://hasura.io/learn/graphql",
+      options: {
+        reconnect: true,
+        connectionParams: {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        },
       },
     }),
     cache: new InMemoryCache(),
