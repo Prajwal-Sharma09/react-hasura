@@ -15,6 +15,7 @@ const OnlineUsersWrapper = () => {
       // Clean up
       clearInterval(onlineIndicator);
     };
+    // eslint-disable-next-line
   }, []);
   const UPDATE_LASTSEEN_MUTATION = gql`
     mutation updateLastSeen($now: timestamptz!) {
