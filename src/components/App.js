@@ -30,9 +30,9 @@ const createApolloClient = (authToken) => {
 
 const App = () => {
   const idToken = useAccessToken();
+  const [client] = useState(createApolloClient(idToken));
   const { loading, logout } = useAuth0();
 
-  const [client] = useState(createApolloClient(idToken));
   if (loading) {
     return <div>Loading...</div>;
   }
